@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "gcc build active file",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/out",
+                // 下面这几行是新增的 FFmpeg 库链接参数
+                "-lavformat",
+                "-lavcodec",
+                "-lavutil",
+                "-lswscale",
+                "-lSDL2"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "编译器: /usr/bin/gcc"
+        }
+    ]
+    
+}
