@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/videoplayer.dir/videoplayer.c.o  -o videoplayer  -lSDL2 -lavformat -lavcodec -lavutil -lswscale -lm 

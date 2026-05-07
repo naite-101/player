@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/naite/player/videoplayer.c
+stdio.h
+-
+libavformat/avformat.h
+-
+libavcodec/avcodec.h
+-
+libswscale/swscale.h
+-
+SDL2/SDL.h
+-
+
