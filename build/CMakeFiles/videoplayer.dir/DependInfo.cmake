@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/naite/player/videoplayer.c" "/home/naite/player/build/CMakeFiles/videoplayer.dir/videoplayer.c.o"
+  "/home/naite/player/src/videoplayermain.c" "/home/naite/player/build/CMakeFiles/videoplayer.dir/src/videoplayermain.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

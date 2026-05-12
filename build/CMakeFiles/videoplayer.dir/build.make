@@ -57,27 +57,27 @@ include CMakeFiles/videoplayer.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/videoplayer.dir/flags.make
 
-CMakeFiles/videoplayer.dir/videoplayer.c.o: CMakeFiles/videoplayer.dir/flags.make
-CMakeFiles/videoplayer.dir/videoplayer.c.o: ../videoplayer.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/naite/player/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/videoplayer.dir/videoplayer.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/videoplayer.dir/videoplayer.c.o   -c /home/naite/player/videoplayer.c
+CMakeFiles/videoplayer.dir/src/videoplayermain.c.o: CMakeFiles/videoplayer.dir/flags.make
+CMakeFiles/videoplayer.dir/src/videoplayermain.c.o: ../src/videoplayermain.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/naite/player/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/videoplayer.dir/src/videoplayermain.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/videoplayer.dir/src/videoplayermain.c.o   -c /home/naite/player/src/videoplayermain.c
 
-CMakeFiles/videoplayer.dir/videoplayer.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/videoplayer.dir/videoplayer.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/naite/player/videoplayer.c > CMakeFiles/videoplayer.dir/videoplayer.c.i
+CMakeFiles/videoplayer.dir/src/videoplayermain.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/videoplayer.dir/src/videoplayermain.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/naite/player/src/videoplayermain.c > CMakeFiles/videoplayer.dir/src/videoplayermain.c.i
 
-CMakeFiles/videoplayer.dir/videoplayer.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/videoplayer.dir/videoplayer.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/naite/player/videoplayer.c -o CMakeFiles/videoplayer.dir/videoplayer.c.s
+CMakeFiles/videoplayer.dir/src/videoplayermain.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/videoplayer.dir/src/videoplayermain.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/naite/player/src/videoplayermain.c -o CMakeFiles/videoplayer.dir/src/videoplayermain.c.s
 
 # Object files for target videoplayer
 videoplayer_OBJECTS = \
-"CMakeFiles/videoplayer.dir/videoplayer.c.o"
+"CMakeFiles/videoplayer.dir/src/videoplayermain.c.o"
 
 # External object files for target videoplayer
 videoplayer_EXTERNAL_OBJECTS =
 
-videoplayer: CMakeFiles/videoplayer.dir/videoplayer.c.o
+videoplayer: CMakeFiles/videoplayer.dir/src/videoplayermain.c.o
 videoplayer: CMakeFiles/videoplayer.dir/build.make
 videoplayer: CMakeFiles/videoplayer.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/naite/player/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable videoplayer"

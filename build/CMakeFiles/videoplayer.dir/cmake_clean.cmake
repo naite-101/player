@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/videoplayer.dir/videoplayer.c.o"
+  "CMakeFiles/videoplayer.dir/src/videoplayermain.c.o"
   "videoplayer"
   "videoplayer.pdb"
 )

@@ -123,32 +123,32 @@ videoplayer/fast:
 	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/build
 .PHONY : videoplayer/fast
 
-videoplayer.o: videoplayer.c.o
+src/videoplayermain.o: src/videoplayermain.c.o
 
-.PHONY : videoplayer.o
+.PHONY : src/videoplayermain.o
 
 # target to build an object file
-videoplayer.c.o:
-	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/videoplayer.c.o
-.PHONY : videoplayer.c.o
+src/videoplayermain.c.o:
+	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/src/videoplayermain.c.o
+.PHONY : src/videoplayermain.c.o
 
-videoplayer.i: videoplayer.c.i
+src/videoplayermain.i: src/videoplayermain.c.i
 
-.PHONY : videoplayer.i
+.PHONY : src/videoplayermain.i
 
 # target to preprocess a source file
-videoplayer.c.i:
-	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/videoplayer.c.i
-.PHONY : videoplayer.c.i
+src/videoplayermain.c.i:
+	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/src/videoplayermain.c.i
+.PHONY : src/videoplayermain.c.i
 
-videoplayer.s: videoplayer.c.s
+src/videoplayermain.s: src/videoplayermain.c.s
 
-.PHONY : videoplayer.s
+.PHONY : src/videoplayermain.s
 
 # target to generate assembly for a file
-videoplayer.c.s:
-	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/videoplayer.c.s
-.PHONY : videoplayer.c.s
+src/videoplayermain.c.s:
+	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/src/videoplayermain.c.s
+.PHONY : src/videoplayermain.c.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... videoplayer"
-	@echo "... videoplayer.o"
-	@echo "... videoplayer.i"
-	@echo "... videoplayer.s"
+	@echo "... src/videoplayermain.o"
+	@echo "... src/videoplayermain.i"
+	@echo "... src/videoplayermain.s"
 .PHONY : help
 
 
