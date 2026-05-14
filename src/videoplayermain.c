@@ -11,7 +11,7 @@
 //窗口的长
 #define window_high 360
 
-//
+//音频缓冲区结构体
 static struct 
 {
     uint8_t *data;
@@ -144,18 +144,58 @@ int main(int argc, char *argv[]){
     if (audio_stream == -1)
     {
         printf("没有找到音频流\n");
-        return -1;
+       
     }
     
+    //获取时间基
+    AVRational time_base = ctx ->streams[video_stream]->time_base;
+    //获取平均帧率
+    AVRational frame_rate = ctx->streams[video_stream]->avg_frame_rate;
+    //当平均帧率无法使用时切换成真实帧率
+    if (frame_rate.num == 0 || frame_rate.den == 0)
+    {
+        frame_rate = ctx->streams[video_stream]->r_frame_rate;
+    }
+    //计算每帧的间隔时间
+    //av_q2d是把他转换成浮点数，av_inv_q取倒数
+    double frame_delay = av_q2d(av_inv_q(frame_rate));
+
+    printf("视频帧率：%.2f fps,每秒延迟： %.3f 毫秒\n",
+            av_q2d(frame_rate), frame_delay * 1000);
+ 
+    //初始化音频同步的两个变量
+    //记录上一帧的时间戳
+    double last_pts = 0;
+    //维护一个视频播放的绝对时间轴
+    double video_clock = 0;
+
+
     //5.获得解码器
     AVCodecParameters *codec_par = ctx ->streams[video_stream]->codecpar;
     //把存入的流放到ctx中，从而获取这个些流的信息，方便告诉编码器
     AVCodec *codec = avcodec_find_decoder(codec_par->codec_id);
     //寻找合适的编码器
+        if (!codec)
+    {
+        printf("找不到解码器\n");
+        return-1;
+    }
+
     AVCodecContext *codec_cxt =avcodec_alloc_context3(codec);
     //空白一个解码器让流的信息有地方储存
+        if (!codec_cxt)
+    {
+        printf("分配视频上下文失败\n");
+        return-1;
+    }
     avcodec_parameters_to_context(codec_cxt,codec_par);
     //把之前的流的信息都储存到编码器中
+    if (avcodec_open2(codec_cxt, codec, NULL) < 0)
+     {
+    printf("打开视频解码器失败\n");
+    return -1;
+     }
+
     avcodec_open2(codec_cxt,codec ,NULL);
     //打开编码器
 
@@ -198,40 +238,19 @@ int main(int argc, char *argv[]){
         }
     }
     
-    //检查
-    if (!codec)
-    {
-        printf("找不到解码器\n");
-        return-1;
-    }
-    
-    if (!codec_cxt)
-    {
-        printf("分配视频上下文失败\n");
-        return-1;
-    }
-    
-    if (avcodec_open2(codec_cxt, codec, NULL) < 0)
-     {
-    printf("打开解码器失败\n");
-    return -1;
-     }
-    
-    if (!audio_ctx)
-    {
-        printf("分配音频上下文失败\n");
-        return-1;
-    }
-    
     //6.初始化SDL
-        SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-        //初始化SDL，并且告诉SDL我接下来是要用视频和音频相关的功能
-        //创建互斥锁
-        audio_buf.mutex = SDL_CreateMutex();
-        //创建一个环境变量用于实现唤醒
-        audio_buf.cond = SDL_CreateCond();
-        //初始化等待
-        audio_buf.waiting = 0;
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+    {
+        printf("SDL 初始化失败：%s\n", SDL_GetError());
+        return -1;
+    }
+    //初始化SDL，并且告诉SDL我接下来是要用视频和音频相关的功能
+    //创建互斥锁
+    audio_buf.mutex = SDL_CreateMutex();
+    //创建一个环境变量用于实现唤醒
+    audio_buf.cond = SDL_CreateCond();
+    //初始化等待
+    audio_buf.waiting = 0;
     //创建一个窗口用来播放视频
     SDL_Window *window = SDL_CreateWindow(
         "FFmpeg 播放器",
@@ -239,6 +258,12 @@ int main(int argc, char *argv[]){
         window_width,window_high,
         SDL_WINDOW_SHOWN
     );
+    if (!window)
+    {
+        printf("创建窗口失败： %s\n",SDL_GetError());
+        return -1;
+    }
+    
     //创建渲染器
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_Texture *texture = SDL_CreateTexture(
@@ -261,8 +286,12 @@ int main(int argc, char *argv[]){
         if (audio_buf.device_id)
         {
             SDL_PauseAudioDevice(audio_buf.device_id,0);
+            printf("音频设备打开成功\n");
         }
-        
+        else
+        {
+            printf("音频设备打开失败\n",SDL_GetError());
+        }
     }
 
     //7. 开始读取帧和解码和显示
@@ -343,6 +372,38 @@ int main(int argc, char *argv[]){
             //遍历解码器中的帧
             while (avcodec_receive_frame(codec_cxt,frame )==0)
             {
+                //设置变量pts储存时间戳
+                double pts = 0;
+                //获得有效的时间戳
+                //pts是显示时间戳，dts是解码时间戳
+                //显示时间戳的优先级大于解码时间传
+                if (frame->pts != AV_NOPTS_VALUE)
+                {
+                    pts = frame->pts * av_q2d(time_base);
+                }
+                else if (frame->pkt_dts != AV_NOPTS_VALUE)
+                {
+                    pts = frame->pkt_dts * av_q2d(time_base);
+                }
+                
+                //设置变量存放两帧的等待时间
+                double delay = frame_delay;
+                if (last_pts != 0 && pts > 0)
+                {
+                    delay = pts - last_pts;
+                    //间隔不合理时
+                    if (delay <= 0 || delay >1.0)
+                    {
+                        //退回到理论值
+                        delay = frame_delay;
+                    }
+                    
+                }
+                //更新时间戳
+                last_pts =pts;
+                //时间戳累加
+                video_clock += delay;
+
                 //把帧显示到窗口
                 SDL_UpdateYUVTexture(
                     texture,NULL,
@@ -357,8 +418,16 @@ int main(int argc, char *argv[]){
                 SDL_RenderCopy(renderer,texture,NULL,NULL);
                 SDL_RenderPresent(renderer);
                 
-                //控制播放速度25fps
-                SDL_Delay(25);
+                //把秒转换成毫秒并且取整数
+                int delay_ms = (int)(delay * 1000);
+
+                //设置最大的延迟为100ms
+                if(delay_ms >100) delay_ms = 100;
+                //设置最小的延迟是1ms
+                if(delay_ms < 1) delay_ms = 1;
+                //程序暂停
+                SDL_Delay(delay_ms);
+                
             }
             
         }
@@ -374,8 +443,7 @@ int main(int argc, char *argv[]){
     if (audio_buf.device_id)
     {
         SDL_Delay(2000);
-    }
-    
+    } 
  
     // 释放资源
     if (audio_buf.data) av_freep(&audio_buf.data);
@@ -393,5 +461,6 @@ int main(int argc, char *argv[]){
     SDL_DestroyWindow(window);
     SDL_Quit();
 
+    printf("播放器正常退出\n");
     return 0;  
 }
