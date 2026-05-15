@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named videoplayer
+# Target rules for targets named myplayer
 
 # Build rule for target.
-videoplayer: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 videoplayer
-.PHONY : videoplayer
+myplayer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 myplayer
+.PHONY : myplayer
 
 # fast build rule for target.
-videoplayer/fast:
-	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/build
-.PHONY : videoplayer/fast
+myplayer/fast:
+	$(MAKE) -f CMakeFiles/myplayer.dir/build.make CMakeFiles/myplayer.dir/build
+.PHONY : myplayer/fast
 
-src/videoplayermain.o: src/videoplayermain.c.o
+src/videoplayermain.o: src/videoplayermain.cpp.o
 
 .PHONY : src/videoplayermain.o
 
 # target to build an object file
-src/videoplayermain.c.o:
-	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/src/videoplayermain.c.o
-.PHONY : src/videoplayermain.c.o
+src/videoplayermain.cpp.o:
+	$(MAKE) -f CMakeFiles/myplayer.dir/build.make CMakeFiles/myplayer.dir/src/videoplayermain.cpp.o
+.PHONY : src/videoplayermain.cpp.o
 
-src/videoplayermain.i: src/videoplayermain.c.i
+src/videoplayermain.i: src/videoplayermain.cpp.i
 
 .PHONY : src/videoplayermain.i
 
 # target to preprocess a source file
-src/videoplayermain.c.i:
-	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/src/videoplayermain.c.i
-.PHONY : src/videoplayermain.c.i
+src/videoplayermain.cpp.i:
+	$(MAKE) -f CMakeFiles/myplayer.dir/build.make CMakeFiles/myplayer.dir/src/videoplayermain.cpp.i
+.PHONY : src/videoplayermain.cpp.i
 
-src/videoplayermain.s: src/videoplayermain.c.s
+src/videoplayermain.s: src/videoplayermain.cpp.s
 
 .PHONY : src/videoplayermain.s
 
 # target to generate assembly for a file
-src/videoplayermain.c.s:
-	$(MAKE) -f CMakeFiles/videoplayer.dir/build.make CMakeFiles/videoplayer.dir/src/videoplayermain.c.s
-.PHONY : src/videoplayermain.c.s
+src/videoplayermain.cpp.s:
+	$(MAKE) -f CMakeFiles/myplayer.dir/build.make CMakeFiles/myplayer.dir/src/videoplayermain.cpp.s
+.PHONY : src/videoplayermain.cpp.s
 
 # Help Target
 help:
@@ -158,7 +158,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... videoplayer"
+	@echo "... myplayer"
 	@echo "... src/videoplayermain.o"
 	@echo "... src/videoplayermain.i"
 	@echo "... src/videoplayermain.s"

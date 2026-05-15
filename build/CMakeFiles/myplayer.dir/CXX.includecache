@@ -6,17 +6,21 @@
 
 #IncludeRegexTransform: 
 
-/home/naite/player/src/videoplayermain.c
-stdio.h
--
+/home/naite/player/src/videoplayermain.cpp
 libavformat/avformat.h
 -
 libavcodec/avcodec.h
 -
 libswscale/swscale.h
 -
+libswresample/swresample.h
+-
 SDL2/SDL.h
 -
-libswresample/swresample.h
+libavutil/opt.h
+-
+iostream
+-
+cstring
 -
 

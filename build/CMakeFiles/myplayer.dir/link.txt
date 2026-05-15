@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/myplayer.dir/src/videoplayermain.cpp.o  -o myplayer  -lavformat -lavcodec -lavutil -lswscale -lswresample -lSDL2 -lm -lpthread 

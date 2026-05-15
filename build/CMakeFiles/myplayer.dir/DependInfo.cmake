@@ -1,15 +1,15 @@
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "C"
+  "CXX"
   )
 # The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_C
-  "/home/naite/player/src/videoplayermain.c" "/home/naite/player/build/CMakeFiles/videoplayer.dir/src/videoplayermain.c.o"
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/naite/player/src/videoplayermain.cpp" "/home/naite/player/build/CMakeFiles/myplayer.dir/src/videoplayermain.cpp.o"
   )
-set(CMAKE_C_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
-set(CMAKE_C_TARGET_INCLUDE_PATH
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/SDL2"
   )
 
