@@ -32,7 +32,11 @@ FFmpeg 开发库（libavcodec、libavformat、libavutil、libswscale 等）
 SDL2 开发库
 ### 运行方式
 mkdir build
+
 cd build
+
 cmake ..
+
 make
+
 ./myplayer ../Debugvideo.mp4
